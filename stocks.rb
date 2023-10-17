@@ -67,7 +67,9 @@ class Scam
     @results = []
     @verbose = verbose
 
+    puts Colorize.light_blue('Running steps   ')
     steps.times { next_step! }
+    puts
     notify_results! if verbose
   end
 
@@ -102,6 +104,7 @@ class Scam
     end
 
     self.results << remaining_recipients.count
+    print Colorize.green('.')
   end
 end
 
@@ -136,12 +139,17 @@ else
 end
 
 puts
-show_results = prompt("Do you want to reveal the scam? #{Colorize.green('(y/n)')}").downcase == 'y'
-scam.notify_results! if show_results
-puts
-if sample_recipient
-  puts "After receiving #{Colorize.green(sample_recipient.received_messages.count)} messages, it appeared to #{Colorize.red(sample_recipient.name)} that the stock broker was a genius who had never been wrong!  #{Colorize.red(sample_recipient.name)} was convinced to invest all their money with the broker and then lost it all."
-  puts
+
+unless verbose
+  show_results = prompt("Do you want to reveal the scam? #{Colorize.green('(y/n)')}").downcase == 'y'
+  if show_results
+    scam.notify_results!
+    puts
+    if sample_recipient
+      puts "After receiving #{Colorize.green(sample_recipient.received_messages.count)} messages, it appeared to #{Colorize.red(sample_recipient.name)} that the stock broker was a genius who had never been wrong!  #{Colorize.red(sample_recipient.name)} was convinced to invest all their money with the broker and then lost it all."
+      puts
+    end
+  end
 end
 
 prompt("Thanks for playing! #{Colorize.green('(press Enter to exit)')}")
