@@ -44,9 +44,8 @@ class Recipient
   attr_accessor :continue_sending
 
   def initialize
-    @name = Faker::Name.name
-    while USED_NAMES.include?(@name)
-      @name = Faker::Name.name
+    while @name.nil? || USED_NAMES.include?(@name)
+      @name = Faker::Name.first_name
     end
     USED_NAMES << @name
     @received_messages = []
@@ -152,4 +151,4 @@ unless verbose
   end
 end
 
-prompt("Thanks for playing! #{Colorize.green('(press Enter to exit)')}")
+prompt("Thanks for playing! #{Colorize.green('(press Enter to exit)')} \n\n#{Colorize.light_blue(Faker::Movies::StarWars.wookiee_sentence)}")
