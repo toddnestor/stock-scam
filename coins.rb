@@ -48,11 +48,12 @@ end
 
 prompt("Welcome to the coin flip simulator! #{Colorize.green('(press Enter to continue)')}")
 number = prompt(Colorize.light_blue('Please enter a number of coins to start with:')).to_i
+goal = prompt(Colorize.light_blue('Please enter a number of heads in a row to aim for (leave blank to flip until no coins remain):')).to_i
 
 coins = number.times.map { Coin.new }
 flipper = Flipper.new(coins)
 
-until flipper.coins.length <= 1
+until flipper.coins.length <= 1 || (goal && goal > 0 && flipper.flips >= goal)
   flipper.flip!
   flipper.results
   flipper.discard_tails
@@ -60,6 +61,6 @@ until flipper.coins.length <= 1
 end
 
 coin = flipper.coins.first
-puts "The remaining coin flipped #{Colorize.red(coin.flips.count)} heads in a row!"
+puts "The remaining coin flipped #{Colorize.red(coin.flips.count)} heads in a row!" unless coin.nil?
 
 prompt("Thanks for playing! #{Colorize.green('(press Enter to exit)')}")
