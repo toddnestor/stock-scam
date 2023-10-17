@@ -4,7 +4,6 @@ require 'faker'
 require_relative 'helpers'
 
 USED_SYMBOLS = Set.new
-USED_NAMES = Set.new
 
 class Stock
   attr_reader :symbol, :direction
@@ -45,10 +44,7 @@ class Recipient
   attr_accessor :continue_sending
 
   def initialize
-    while @name.nil? || USED_NAMES.include?(@name)
-      @name = Faker::Name.first_name
-    end
-    USED_NAMES << @name
+    @name = Faker::Name.first_name
     @received_messages = []
     @continue_sending = true
     print Colorize.green('.')
