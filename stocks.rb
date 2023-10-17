@@ -98,8 +98,8 @@ class Scam
   def next_step!
     stock = Stock.new
     stocks << stock
-    recipients.each do |recipient|
-      message = Message.new(stock, %w[up down].sample)
+    remaining_recipients.each_with_index do |recipient, i|
+      message = Message.new(stock, %w[up down][i.even? ? 0 : 1])
       recipient.receive_message(message)
       recipient.continue_sending = false if stock.direction != message.direction
     end
