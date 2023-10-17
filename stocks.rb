@@ -32,6 +32,7 @@ class Message
   def initialize(stock, direction)
     @stock = stock
     @direction = direction
+    print Colorize.green('.')
   end
 
   def to_s
@@ -50,6 +51,7 @@ class Recipient
     USED_NAMES << @name
     @received_messages = []
     @continue_sending = true
+    print Colorize.green('.')
   end
 
   def receive_message(message)
